@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-management
+  template:
+    metadata:
+      labels:
+        app: user-management
+    spec:
+      containers:
+      - name: user-management
+        image: milosky/user-management:latest
+        ports:
+        - containerPort: 3101
+        env:
+        - name: PORT
+          value: "3101"
+        - name: DATABASE_PATH
+          value: "path/to/db/file.sqlite"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-management
+spec:
+  selector:
+    app: user-management
+  ports:
+    - protocol: TCP
+      port: 3101
+      targetPort: 3101
+  
