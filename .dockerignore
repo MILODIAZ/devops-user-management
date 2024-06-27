@@ -1,0 +1,23 @@
+# Ignorar los archivos y directorios node_modules (se instalarán dentro del contenedor)
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Ignorar archivos de configuración de desarrollo
+.DS_Store
+.env
+.vscode
+.idea
+
+# Ignorar archivos de configuración de Git
+.git
+.gitignore
+
+# Ignorar otros archivos o directorios innecesarios
+logs
+*.log
+tmp
+
+# Ignorar Dockerfile y .dockerignore
+Dockerfile
+.dockerignore
