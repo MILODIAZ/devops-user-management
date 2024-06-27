@@ -11,6 +11,6 @@ async function bootstrap() {
   app.enableCors();
   app.useGlobalFilters(new AllExceptionsFilter());
 
-  await app.listen(configService.getAppPort() || 3000);
+  await app.listen(configService.getAppPort() || 3001);
 }
 bootstrap();
