@@ -11,7 +11,7 @@ pipeline{
         stage('Build Docker Image') {
             steps {
                 script {
-                  sh 'docker build -t milosky/user-management:latest'
+                  sh 'docker build -t milosky/user-management:latest .'
                 }
             }
         }
@@ -21,7 +21,7 @@ pipeline{
                  withCredentials([string(credentialsId: 'docker_hub_creds', variable: 'dockerhubpwd')]) {
                     sh 'docker login -u milosky -p ${dockerhubpwd}'
                  }  
-                 sh 'docker push milosky/user-management:latest .'
+                 sh 'docker push milosky/user-management:latest'
                 }
             }
         }
