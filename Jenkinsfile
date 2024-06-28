@@ -21,7 +21,7 @@ pipeline{
                  withCredentials([string(credentialsId: 'docker_hub_creds', variable: 'dockerhubpwd')]) {
                     sh 'docker login -u milosky -p ${dockerhubpwd}'
                  }  
-                 sh 'docker push milosky/user-management:latest'
+                 sh 'docker push milosky/user-management:latest .'
                 }
             }
         }
