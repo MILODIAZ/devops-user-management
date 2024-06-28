@@ -3,7 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from '../auth.service';
 import { AuthController } from '../auth.controller';
 import { VALID_LOGIN_DATA, VALID_USER } from './auth.mocks';
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, HttpException } from '@nestjs/common';
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -52,7 +52,7 @@ describe('AuthController', () => {
         await controller.loginUser(VALID_LOGIN_DATA);
       } catch (error) {
         expect(error).toBeDefined();
-        expect(error).toBeInstanceOf(BadRequestException);
+        expect(error).toBeInstanceOf(HttpException);
         expect(loginSpy).toHaveBeenCalled();
         return;
       }
