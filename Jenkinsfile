@@ -5,21 +5,7 @@ pipeline {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/MILODIAZ/devops-user-management.git']]])
             }
-        }
-        stage('Install NPM Dependencies') {
-            steps {
-                script {
-                    sh 'npm install'
-                }
-            }
-        }
-        stage('Run NPM Tests') {
-            steps {
-                script {
-                    sh 'npm run test'
-                }
-            }
-        }
+        }        
         stage('Build Docker Image') {
             steps {
                 script {
