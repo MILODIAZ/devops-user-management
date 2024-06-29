@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Build Maven') {
+        stage('Build NodeApp') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/MILODIAZ/devops-user-management.git']]])
             }
@@ -23,12 +23,10 @@ pipeline {
                 }
             }
         }
-        stage('Deploy App on k8s') {
+        stage('Deploying NodeJs container to Kubernetes') {
             steps {
-                withCredentials([
-                    string(credentialsId: 'my_kubernetes', variable: 'api_token')
-                ]) {
-                    sh 'kubectl --token $api_token --server https://192.168.49.2:8443 --insecure-skip-tls-verify=true apply -f deployment.yaml'
+                script {
+                    kubernetesDeploy(configs: "deployment.yaml")
                 }
             }
         }
