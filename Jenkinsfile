@@ -9,23 +9,11 @@ pipeline {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/MILODIAZ/devops-user-management.git']]])
             }
-        }        
-        stage('Build Docker Image') {
+        }             
+        stage('Deploying NodeJs container to Kubernetes') {
             steps {
-                script {
-                    sh 'docker build -t milosky/user-management:latest .'
-                }
+                kubernetesDeploy(configs: 'deployment.yaml')
             }
         }
-        stage('Deploy Docker Image') {
-            steps {
-                script {
-                    withCredentials([string(credentialsId: 'docker_hub_creds', variable: 'dockerhubpwd')]) {
-                        sh 'docker login -u milosky -p ${dockerhubpwd}'
-                    }
-                    sh 'docker push milosky/user-management:latest'
-                }
-            }
-        }        
     }
 }
