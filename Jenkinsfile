@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        kubernetes {
+            label 'my-kubernetes-agent'
+        }
+    }
     stages {
         stage('Build NodeApp') {
             steps {
@@ -25,12 +29,7 @@ pipeline {
         }
         stage('Deploying NodeJs container to Kubernetes') {
             steps {
-                // Apply Kubernetes deployment using the Kubernetes service account
-                withCredentials([string(credentialsId: 'my_kubernetes', variable: 'api_token')]) {
-                    bat """
-                        kubectl --token $api_token --server https://192.168.103.2:8443  --insecure-skip-tls-verify=true apply -f deployment.yaml 
-                    """
-                }
+                kubernetesDeploy(configs: 'deployment.yaml')
             }
         }
     }
