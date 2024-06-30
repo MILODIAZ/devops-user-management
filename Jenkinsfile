@@ -26,11 +26,6 @@ pipeline {
                     sh 'docker push milosky/user-management:latest'
                 }
             }
-        }
-        stage('Deploying NodeJs container to Kubernetes') {
-            steps {
-                kubernetesDeploy(configs: 'deployment.yaml')
-            }
-        }
+        }        
     }
 }
