@@ -25,8 +25,14 @@ pipeline {
         }
         stage('Deploying NodeJs container to Kubernetes') {
             steps {
-                script {
-                    kubernetesDeploy(configs: "deployment.yaml")
+                // Apply Kubernetes deployment using the Kubernetes service account
+                withCredentials([string(credentialsId: 'my_kubernetes', variable: 'api_token')]) {
+                    bat """
+                        kubectl apply -f "deployment.yaml" \
+                        --token=api_token \
+                        --server=http://192.168.49.2:8443 \
+                        --insecure-skip-tls-verify
+                    """
                 }
             }
         }
