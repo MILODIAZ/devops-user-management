@@ -13,15 +13,15 @@ spec:
         app: user-management
     spec:
       containers:
-      - name: user-management
-        image: milosky/user-management:latest
-        ports:
-        - containerPort: 3101
-        env:
-        - name: PORT
-          value: "3101"
-        - name: DATABASE_PATH
-          value: "path/to/db/file.sqlite"
+        - name: user-management
+          image: milosky/user-management:latest
+          ports:
+            - containerPort: 3101
+          env:
+            - name: PORT
+              value: '3101'
+            - name: DATABASE_PATH
+              value: 'path/to/db/file.sqlite'
 ---
 apiVersion: v1
 kind: Service
@@ -34,4 +34,3 @@ spec:
     - protocol: TCP
       port: 3101
       targetPort: 3101
-  
