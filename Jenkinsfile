@@ -23,13 +23,12 @@ pipeline {
                 }
             }
         }
-        stage('Deploying NodeJs container to Kubernetes') {
+        stage('Deploy App on k8s') {
             steps {
-        withCredentials([
-            string(credentialsId: 'my_kubernetes', variable: 'api_token')
-            ]) {
-             sh 'kubectl --token $api_token --server https://192.168.49.2:8443  --insecure-skip-tls-verify=true apply -f deployment.yaml '
-               }
+                withCredentials([string(credentialsId: 'my_kubernetes', variable: 'api_token')]) {
+                    sh 'kubectl --token $api_token --server https://192.168.103.2:8443  --insecure-skip-tls-verify=true apply -f nodejsapp.yaml '
+                }
+            }
         }
     }
 }
