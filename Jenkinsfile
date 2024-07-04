@@ -26,7 +26,10 @@ pipeline {
         stage('Apply Kubernetes files') {
             steps{
                 withKubeConfig([credentialsId: 'my_kubernetes', serverUrl: 'https://192.168.49.2:8443']) {
-                    sh 'kubectl apply -f deployment.yaml'
+                    sh '''
+                        kubectl apply -f deployment.yaml
+                        kubectl annotate deployment user-management kubernetes.io/change-cause="Update $(date)"
+                        '''
                 }
             }
         }
