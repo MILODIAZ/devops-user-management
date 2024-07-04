@@ -26,7 +26,7 @@ pipeline {
         stage('Apply Kubernetes files') {
             steps{
                 withKubeConfig([credentialsId: 'my_kubernetes', serverUrl: 'https://192.168.49.2:8443']) {
-                    sh 'kubectl rollout restart -f deployment.yaml'
+                    sh 'kubectl apply -f user-management.yaml && kubectl rollout restart deployment user-management'
                 }
             }
         }
