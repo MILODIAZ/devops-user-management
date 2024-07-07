@@ -1,9 +1,18 @@
 pipeline {
     agent any
     stages {
-        stage('Build NodeApp') {
+        stage('SCM NodeApp') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/MILODIAZ/devops-user-management.git']]])
+            }
+        }  
+        stage('Test NodeApp') {
+            agent{
+                docker { image 'node:20'}
+            }
+            steps {
+                sh 'npm install'
+                sh 'npm run test'
             }
         }        
         stage('Build Docker Image') {
